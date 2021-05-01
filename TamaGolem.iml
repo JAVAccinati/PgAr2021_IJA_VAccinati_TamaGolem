@@ -8,6 +8,9 @@
     <content url="file://$MODULE_DIR$/../UniBSFpLib">
       <sourceFolder url="file://$MODULE_DIR$/../UniBSFpLib/src" isTestSource="false" />
     </content>
+    <content url="file://$USER_HOME$/eclipse-workspace/UniBSFpLib">
+      <sourceFolder url="file://$USER_HOME$/eclipse-workspace/UniBSFpLib/src" isTestSource="false" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
