@@ -1,5 +1,7 @@
 package it.unibs.pgar.tamagolem;
 
+import it.unibs.fp.mylib.NumeriCasuali;
+
 public enum Elementi {
     SIMP(0),
     POGGERS(1),
@@ -11,18 +13,20 @@ public enum Elementi {
     GOLD_DIGGER(7),
     KAREN(8);
 
-    private int numeroElemento;
+    private int numeroListaElemento;
+    private int indiceElemento;
 
-    public int getNumeroElemento() {
-        return numeroElemento;
+    public int getNumeroListaElemento() {
+        return numeroListaElemento;
     }
 
-    public void setNumeroElemento(int numeroElemento) {
-        this.numeroElemento = numeroElemento;
+    public void setNumeroListaElemento(int numeroListaElemento) {
+        this.numeroListaElemento = numeroListaElemento;
     }
 
-    Elementi(int numeroElemento){
-        this.numeroElemento = numeroElemento;
+    Elementi(int numeroListaElemento){
+        this.numeroListaElemento = numeroListaElemento;
+        indiceElemento = NumeriCasuali.estraiIntero(0, 9);
     }
 
 }
