@@ -9,7 +9,7 @@ public class Setup {
     public static int dannoMin = -3;
     public static int dannoMax = 3;
 
-    public static int/*int[][]*/ generaGrafo() {
+    public static int[][] generaGrafo() {
         int[][] grafo = new int[N][N];
 
         for (int i = 0; i < N; i++) {
@@ -46,7 +46,7 @@ public class Setup {
         grafo [8][0] = calcolaUltimoElemento(grafo[8]);
         grafo [0][8] = - grafo[8][0];
 
-       /* int somma = 0;
+        int somma = 0;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 somma += grafo[i][j];
@@ -62,17 +62,18 @@ public class Setup {
             }
             System.out.print(String.format("%4d", somma));
             somma = 0;
-        }*/
-        int check = 0;
+        }
+ /*       int check = 0;
         for(int i = 0; i < N; i++){
             for(int j = 0; j < N; j++){
-                if(grafo[i][j] > 20){
+                if(grafo[i][j] > 15){
                     check = 1;
                 }
             }
         }
 
-        return check;
+        return check; */
+        return grafo;
     }
 
     private static int calcolaUltimoElemento(int[] riga){
