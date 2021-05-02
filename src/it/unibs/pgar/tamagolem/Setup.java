@@ -6,10 +6,10 @@ public class Setup {
 
     public static final int N = Elementi.values().length;
 
-    public static final int DANNO_MIN = -5;
-    public static final int DANNO_MAX = 5;
+    public static int dannoMin = -3;
+    public static int dannoMax = 3;
 
-    public static int[][] generaGrafo() {
+    public static int/*int[][]*/ generaGrafo() {
         int[][] grafo = new int[N][N];
 
         for (int i = 0; i < N; i++) {
@@ -19,31 +19,34 @@ public class Setup {
         for (int i = 1; i < N - 1; i++) {                // sulle righe si trova chi attacca
             for (int j = i + 1; j < N - 1; j++) {        // e sulle colonne chi subisce
                 do {
-                    grafo[i][j] = NumeriCasuali.estraiIntero(DANNO_MIN, DANNO_MAX);
+                    grafo[i][j] = NumeriCasuali.estraiIntero(dannoMin, dannoMax);
+                    dannoMax -= grafo[i][j];
+                    dannoMin -= grafo[i][j];
                 } while (grafo[i][j] == 0);
 
                 grafo[j][i] = -grafo[i][j];
             }
         }
 
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < N - 1; i++) {
             do {
-                grafo[0][i] = NumeriCasuali.estraiIntero(DANNO_MIN, DANNO_MAX);
+                grafo[0][i] = NumeriCasuali.estraiIntero(dannoMin, dannoMax);
+                dannoMax -= grafo[0][i];
+                dannoMin -= grafo[0][i];
             } while (grafo[0][i] == 0);
 
-            grafo[0][i] = -grafo[i][0];
+            grafo[i][0] = -grafo[0][i];
         }
 
-        for (int i = 5; i < N - 1; i++) {
-            do {
-                grafo[i][8] = NumeriCasuali.estraiIntero(DANNO_MIN, DANNO_MAX);
-            } while (grafo[i][8] == 0);
-
-                grafo[8][i] = -grafo[i][8];
-
+        for(int i = 1; i < N - 1; i++){
+            grafo [i][8] = calcolaUltimoElemento(grafo[i]);
+            grafo [8][i] = - grafo[i][8];
         }
 
-        int somma = 0;
+        grafo [8][0] = calcolaUltimoElemento(grafo[8]);
+        grafo [0][8] = - grafo[8][0];
+
+       /* int somma = 0;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 somma += grafo[i][j];
@@ -59,9 +62,25 @@ public class Setup {
             }
             System.out.print(String.format("%4d", somma));
             somma = 0;
+        }*/
+        int check = 0;
+        for(int i = 0; i < N; i++){
+            for(int j = 0; j < N; j++){
+                if(grafo[i][j] > 20){
+                    check = 1;
+                }
+            }
         }
 
-        return grafo;
+        return check;
+    }
+
+    private static int calcolaUltimoElemento(int[] riga){
+        int inversoNumero = 0;
+        for(int i = 0; i < N; i++){
+            inversoNumero += riga[i];
+        }
+        return -inversoNumero;
     }
 
 }
