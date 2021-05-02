@@ -11,7 +11,6 @@ public class Setup {
 
     public static int[][] generaGrafo() {
         int[][] grafo = new int[N][N];
-        int[] sommeParziali = new int[N];
 
         for (int i = 0; i < N; i++) {
             grafo[i][i] = 0;
@@ -22,7 +21,7 @@ public class Setup {
                 do {
                     grafo[i][j] = NumeriCasuali.estraiIntero(DANNO_MIN, DANNO_MAX);
 
-                } while (grafo[i][j] == 0 /*|| controlloSomma(grafo[i], j)*/);
+                } while (grafo[i][j] == 0);
 
                 grafo[j][i] = -grafo[i][j];
             }
@@ -44,9 +43,51 @@ public class Setup {
             grafo[8][i] = -grafo[i][8];
         }
 
+        //no zeri nella prima e ultima colonna (no controllo angoli)
+        //guardando la foto che vi ho mandato si vede come gli elementi
+        //della prima riga siano collegati con quelli dell'ultima colonna
+        //attraverso l'angolo in alto a dx.
+        //Sfrutto questo collegamento per poter modificare "liberamente"
+        //i valori uguali a zero nell'ultima colonna
+        for (int i = 1; i < N - 1; i++) {
+            if (grafo[i][8] == 0) {
+                if (grafo[0][i] != 1) {
+                    grafo[i][8]--;
+                    grafo[8][i] = -grafo[i][8];
+                    grafo[0][i]--;
+                    grafo[i][0] = -grafo[0][i];
+                } else {
+                    grafo[i][8]++;
+                    grafo[8][i] = -grafo[i][8];
+                    grafo[0][i]++;
+                    grafo[i][0] = -grafo[0][i];
+                }
+
+            }
+        }
+
         //inserisco angoli
         grafo[8][0] = calcolaUltimoElemento(grafo[8]);
         grafo[0][8] = -grafo[8][0];
+
+        //controllo angoli diversi da zero
+        //in maniera del tutto analogo sfrutto i collegamenti tra i
+        //vertici di questi triangoli
+        if (grafo[0][8] == 0) {
+            for (int i = 1; i < N - 1; i++) {
+                if (grafo[0][i] != -1 && grafo[i][8] != -1) {
+                    grafo[0][8]--;
+                    grafo[8][0] = -grafo[0][8];
+                    grafo[0][i]++;
+                    grafo[i][0] = -grafo[0][i];
+                    grafo[i][8]++;
+                    grafo[8][i] = -grafo[i][8];
+                    break;
+                }
+
+            }
+
+        }
 
         //stampa
         int somma = 0;
@@ -78,17 +119,6 @@ public class Setup {
         return -inversoNumero;
     }
 
-    /*public static boolean controlloSomma(int[] riga, int indiceUltimoElementoInserito) {
-        int somma = 0;
-        for (int i = 0; i <= indiceUltimoElementoInserito; i++) {
-            somma = somma + riga[i];
-        }
-        int sommaMassima = 5 * (N - (indiceUltimoElementoInserito + 1));
-        if (somma > Math.abs(sommaMassima))
-            return false;
-        return true;
-    }
-    */
 
 
 }
