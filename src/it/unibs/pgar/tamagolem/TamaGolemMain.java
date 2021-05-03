@@ -6,7 +6,7 @@ public class TamaGolemMain {
 
     public static void main(String[] args) {
 
-        int[][] grafo = Setup2.generaGrafo();
+        int[][] grafo = Setup.generaGrafo();
 
     }
 }

@@ -6,77 +6,110 @@ public class Setup {
 
     public static final int N = Elementi.values().length;
 
-    public static final int DANNO_MAX = 3;
-    public static final int DANNO_MIN = -3;
+    public static final int DANNO_MAX = +7;
+    public static final int DANNO_MIN = -7;
+
+    public static final int VITA = 7;
 
     public static int[][] generaGrafo() {
         int[][] grafo = new int[N][N];
 
-        for (int i = 0; i < N; i++) {
-            grafo[i][i] = 0;
-        }
+        boolean fine = false; //tutti != 0, per almeno count volte e almeno uno == vita
+        int count = 50;
+        do {
+            int i, j;
+            boolean ripeti = false;
+            do {
+                ripeti = false;
 
-        for (int i = 0; i < N - 1; i++) {                // sulle righe si trova chi attacca
-            for (int j = i + 1; j < N - 1; j++) {        // e sulle colonne chi subisce
-                do {
-                    grafo[i][j] = NumeriCasuali.estraiIntero(DANNO_MIN, DANNO_MAX);
-                } while (grafo[i][j] == 0);
+                i = NumeriCasuali.estraiIntero(0, N - 2);
+                j = NumeriCasuali.estraiIntero(i + 1, N - 1);
+                //non sono sui lati dell tabella
+                if (!(i == 0 || j == N - 1)) {
+                    int casuale = NumeriCasuali.estraiIntero(0, 3);
+                    //se casuale è pari -> triangolo verticale, se casuale è dispari -> triangolo orizzontale,
+                    //se casuale = 0 || 1 -> - 1, se casuale = 2 || 3 -> + 1
+                    int daAggiungere = casuale > 1 ? +1 : -1;
 
-                grafo[j][i] = -grafo[i][j];
-            }
-
-        }
-
-        //Inserisco ultima riga/colonna
-        for (int i = 1; i < N - 1; i++) {
-            grafo[i][8] = calcolaUltimoElemento(grafo[i]);
-            grafo[8][i] = -grafo[i][8];
-        }
-
-        //no zeri nella prima e ultima colonna (no controllo angoli)
-        //guardando la foto che vi ho mandato si vede come gli elementi
-        //della prima riga siano collegati con quelli dell'ultima colonna
-        //attraverso l'angolo in alto a dx.
-        //Sfrutto questo collegamento per poter modificare "liberamente"
-        //i valori uguali a zero nell'ultima colonna
-        for (int i = 1; i < N - 1; i++) {
-            if (grafo[i][8] == 0) {
-                if (grafo[0][i] != 1) {
-                    grafo[i][8]--;
-                    grafo[8][i] = -grafo[i][8];
-                    grafo[0][i]--;
-                    grafo[i][0] = -grafo[0][i];
+                    if (casuale % 2 == 0) {
+                        if (Math.abs(grafo[i][j] + daAggiungere) <= DANNO_MAX && Math.abs(grafo[0][i] + daAggiungere) <= DANNO_MAX && Math.abs(grafo[0][j] - daAggiungere) <= DANNO_MAX) {
+                            grafo[i][j] += daAggiungere;
+                            grafo[0][i] += daAggiungere;
+                            grafo[0][j] -= daAggiungere;
+                        } else {
+                            ripeti = true;
+                        }
+                    } else {
+                        if (Math.abs(grafo[i][j] + daAggiungere) <= DANNO_MAX && Math.abs(grafo[i][N - 1] - daAggiungere) <= DANNO_MAX && Math.abs(grafo[j][N - 1] + daAggiungere) <= DANNO_MAX) {
+                            grafo[i][j] += daAggiungere;
+                            grafo[i][N - 1] -= daAggiungere;
+                            grafo[j][N - 1] += daAggiungere;
+                        } else {
+                            ripeti = true;
+                        }
+                    }
+                    //sono sui lati della tabella ma non nell'angolo
+                } else if (i == 0 ^ j == N - 1) {
+                    if (i == 0) {
+                        int casuale;
+                        do {
+                            casuale = NumeriCasuali.estraiIntero(1, N - 1);
+                        } while (casuale == j);
+                        int daAggiungere = casuale > (N - 1) / 2 ? +1 : -1;
+                        if (casuale > j) {
+                            int temp = j;
+                            j = casuale;
+                            casuale = temp;
+                        }
+                        if (Math.abs(grafo[casuale][j] + daAggiungere) <= DANNO_MAX && Math.abs(grafo[i][j] - daAggiungere) <= DANNO_MAX && Math.abs(grafo[i][casuale] + daAggiungere) <= DANNO_MAX) {
+                            grafo[casuale][j] += daAggiungere;
+                            grafo[i][j] -= daAggiungere;
+                            grafo[i][casuale] += daAggiungere;
+                        } else {
+                            ripeti = true;
+                        }
+                    } else {
+                        int casuale;
+                        do {
+                            casuale = NumeriCasuali.estraiIntero(0, N - 2);
+                        } while (casuale == i);
+                        int daAggiungere = casuale > (N - 1) / 2 ? +1 : -1;
+                        if (casuale > i) {
+                            int temp = i;
+                            i = casuale;
+                            casuale = temp;
+                        }
+                        if (Math.abs(grafo[casuale][i] + daAggiungere) <= DANNO_MAX && Math.abs(grafo[i][j] + daAggiungere) <= DANNO_MAX && Math.abs(grafo[casuale][j] - daAggiungere) <= DANNO_MAX) {
+                            grafo[casuale][i] += daAggiungere;
+                            grafo[i][j] += daAggiungere;
+                            grafo[casuale][j] -= daAggiungere;
+                        } else {
+                            ripeti = true;
+                        }
+                    }
                 } else {
-                    grafo[i][8]++;
-                    grafo[8][i] = -grafo[i][8];
-                    grafo[0][i]++;
-                    grafo[i][0] = -grafo[0][i];
+                    ripeti = true;
                 }
+            } while (ripeti);
 
-            }
-        }
-
-        //inserisco angoli
-        grafo[8][0] = calcolaUltimoElemento(grafo[8]);
-        grafo[0][8] = -grafo[8][0];
-
-        //controllo angoli diversi da zero
-        //in maniera del tutto analogo sfrutto i collegamenti tra i
-        //vertici di questi triangoli
-        if (grafo[0][8] == 0) {
-            for (int i = 1; i < N - 1; i++) {
-                if (grafo[0][i] != -1 && grafo[i][8] != -1) {
-                    grafo[0][8]--;
-                    grafo[8][0] = -grafo[0][8];
-                    grafo[0][i]++;
-                    grafo[i][0] = -grafo[0][i];
-                    grafo[i][8]++;
-                    grafo[8][i] = -grafo[i][8];
-                    break;
+            count--;
+            int nZeri = 0;
+            int max = -1;
+            for (int k = 0; k < N - 1; k++) {
+                for (int l = k + 1; l < N; l++) {
+                    if (grafo[k][l] == 0)
+                        nZeri++;
+                    max = Math.max(Math.abs(grafo[k][l]), max);
                 }
-
             }
+            if (count <= 0 && nZeri == 0 && max == VITA)
+                fine = true;
+        } while (!fine);
 
+        for (int i = 1; i < N; i++) {
+            for (int j = 0; j < i; j++) {
+                grafo[i][j] = -grafo[j][i];
+            }
         }
 
         //stampa
@@ -100,15 +133,5 @@ public class Setup {
 
         return grafo;
     }
-
-    private static int calcolaUltimoElemento(int[] riga) {
-        int inversoNumero = 0;
-        for (int i = 0; i < N; i++) {
-            inversoNumero += riga[i];
-        }
-        return -inversoNumero;
-    }
-
-
 
 }
