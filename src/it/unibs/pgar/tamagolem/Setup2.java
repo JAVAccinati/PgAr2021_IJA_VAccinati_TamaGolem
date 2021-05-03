@@ -47,7 +47,8 @@ public class Setup2 {
                         } else {
                             ripeti = true;
                         }
-                    } //sono sui lati della tabella ma non nell'angolo
+                    }
+                    //sono sui lati della tabella ma non nell'angolo
                 } else if(i == 0 ^ j == N - 1) {
                     if (i == 0) {
                         int casuale;
