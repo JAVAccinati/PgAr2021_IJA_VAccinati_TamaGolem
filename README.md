@@ -3,3 +3,5 @@
 <img src="foto.jpg">
 
 <img src="25x25.jpg">
+
+<img src="vinter_ci_ama.png">

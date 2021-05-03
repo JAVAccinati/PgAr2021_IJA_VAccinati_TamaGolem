@@ -26,7 +26,7 @@ public enum Elementi {
 
     Elementi(int numeroListaElemento){
         this.numeroListaElemento = numeroListaElemento;
-        indiceElemento = NumeriCasuali.estraiIntero(0, 9);
+        //indiceElemento = NumeriCasuali.estraiIntero(0, 9);
     }
 
 }
