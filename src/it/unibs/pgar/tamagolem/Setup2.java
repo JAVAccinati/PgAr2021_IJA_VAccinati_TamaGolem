@@ -4,125 +4,133 @@ import it.unibs.fp.mylib.NumeriCasuali;
 
 public class Setup2 {
 
-    public static final int LUNGHEZZA_RIGA = 5;
-    public static final int R_MAX = 5;
-    public static final int R_MIN = -5;
+    public static final int N = Elementi.values().length;
 
-    public static void main(String[] args) {
+    public static final int DANNO_MAX = +7;
+    public static final int DANNO_MIN = -7;
 
-        int tabella[][] = new int[LUNGHEZZA_RIGA][LUNGHEZZA_RIGA];
+    public static final int VITA = 7;
 
-        int S1 = 0;
-        int S_max = 0;
-        int S_min = 0;
-        int i;
-        int k;
-        int j;
+    public static int[][] generaGrafo() {
+        int[][] grafo = new int[N][N];
 
+        boolean fine = false; //tutti != 0, per almeno count volte e almeno uno == vita
+        int count = 50;
+        do {
+            int i, j;
+            boolean ripeti = false;
+            do {
+                ripeti = false;
 
-        for (k = 0; k < LUNGHEZZA_RIGA; k++) {
+                i = NumeriCasuali.estraiIntero(0, N - 2);
+                j = NumeriCasuali.estraiIntero(i + 1, N - 1);
+                //non sono sui lati dell tabella
+                if (!(i == 0 || j == N - 1)) {
+                    int casuale = NumeriCasuali.estraiIntero(0, 3);
+                    //se casuale è pari -> triangolo verticale, se casuale è dispari -> triangolo orizzontale,
+                    //se casuale = 0 || 1 -> - 1, se casuale = 2 || 3 -> + 1
+                    int daAggiungere = casuale > 1 ? +1 : -1;
 
-            for (i = 0; i < LUNGHEZZA_RIGA; i++) {
-                S1 = 0;
-
-                if (i == k) {
-                    tabella[k][i] = 0;
-                }
-
-
-                if (i != k) {
-                    do {
-                        tabella[k][i] = NumeriCasuali.estraiIntero(R_MIN, R_MAX);
-
-                    } while (tabella[k][i] == 0);
-                }
-
-                for (j = 0; j <= i; j++) {
-                    S1 = S1 + tabella[k][j];
-                }
-
-                S_max = (LUNGHEZZA_RIGA - (i + 1)) * R_MAX;
-                S_min = -S_max;
-			
-	/*		if(i == LUNGHEZZA_RIGA - 1 && S1 != 0)         //controllo se la somma � 0 quando arrivo a fine riga e la cambio se � deiversa da 0
-			{
-				while(S1 != 0)
-				{
-					int temp = NumeriCasuali.estraiIntero(0, i);
-					while(temp == k)
-						temp = NumeriCasuali.estraiIntero(0, i);
-					
-					while(S1 > 0)
-					{
-						--tabella[k][temp];
-					    --S1;
-					    if(tabella[k][temp] == 0)
-					    {
-					    	--tabella[k][temp];
-						    --S1;
-					    }
-					}
-					
-					while(S1 < 0)
-					{
-						++tabella[k][temp];
-					    ++S1;
-					    if(tabella[k][temp] == 0)
-					    {
-					    	++tabella[k][temp];
-						    ++S1;
-					    }
-					}
-				}
-			}
-			
-			*/
-
-
-                if (S1 > S_max || S1 < S_min) {
-
-                    int temp = NumeriCasuali.estraiIntero(0, i);
-                    //	while(temp == k)
-                    //		temp = NumeriCasuali.estraiIntero(0, i);
-
-                    while (S1 > S_max) {
-                        while (tabella[k][i] <= R_MIN || temp == k)                 //lo esegue solo se vado troppo in basso
-                        {
-                            temp = NumeriCasuali.estraiIntero(0, i);
+                    if (casuale % 2 == 0) {
+                        if(Math.abs(grafo[i][j] + daAggiungere) <= DANNO_MAX && Math.abs(grafo[0][i] + daAggiungere) <= DANNO_MAX && Math.abs(grafo[0][j] - daAggiungere) <= DANNO_MAX) {
+                            grafo[i][j] += daAggiungere;
+                            grafo[0][i] += daAggiungere;
+                            grafo[0][j] -= daAggiungere;
+                        } else {
+                            ripeti = true;
                         }
-                        --tabella[k][temp];
-                        --S1;
-                        if (tabella[k][temp] == 0) {
-                            --tabella[k][temp];
-                            --S1;
+                    } else {
+                        if(Math.abs(grafo[i][j] + daAggiungere) <= DANNO_MAX && Math.abs(grafo[i][N - 1] - daAggiungere) <= DANNO_MAX && Math.abs(grafo[j][N - 1] + daAggiungere) <= DANNO_MAX) {
+                            grafo[i][j] += daAggiungere;
+                            grafo[i][N - 1] -= daAggiungere;
+                            grafo[j][N - 1] += daAggiungere;
+                        } else {
+                            ripeti = true;
                         }
-
-                    }
-
-                    while (S1 < S_min)                             //lo esegue se vado troppo in alto
-                    {
-                        while (tabella[k][i] >= R_MAX || temp == k) {
-                            temp = NumeriCasuali.estraiIntero(0, i);
+                    } //sono sui lati della tabella ma non nell'angolo
+                } else if(i == 0 ^ j == N - 1) {
+                    if (i == 0) {
+                        int casuale;
+                        do {
+                            casuale = NumeriCasuali.estraiIntero(1, N - 1);
+                        }while(casuale == j);
+                        int daAggiungere = casuale > (N - 1) / 2 ? +1 : -1;
+                        if(casuale > j) {
+                            int temp = j;
+                            j = casuale;
+                            casuale = temp;
                         }
-                        ++tabella[k][temp];
-                        ++S1;
-                        if (tabella[k][temp] == 0) {
-                            ++tabella[k][temp];
-                            ++S1;
+                        if(Math.abs(grafo[casuale][j] + daAggiungere) <= DANNO_MAX && Math.abs(grafo[i][j] - daAggiungere) <= DANNO_MAX && Math.abs(grafo[i][casuale] + daAggiungere) <= DANNO_MAX) {
+                            grafo[casuale][j] += daAggiungere;
+                            grafo[i][j] -= daAggiungere;
+                            grafo[i][casuale] += daAggiungere;
+                        } else {
+                            ripeti = true;
+                        }
+                    } else {
+                        int casuale;
+                        do {
+                            casuale = NumeriCasuali.estraiIntero(0, N - 2);
+                        }while(casuale == i);
+                        int daAggiungere = casuale > (N - 1) / 2 ? +1 : -1;
+                        if(casuale > i) {
+                            int temp = i;
+                            i = casuale;
+                            casuale = temp;
+                        }
+                        if(Math.abs(grafo[casuale][i] + daAggiungere) <= DANNO_MAX && Math.abs(grafo[i][j] + daAggiungere) <= DANNO_MAX && Math.abs(grafo[casuale][j] - daAggiungere) <= DANNO_MAX) {
+                            grafo[casuale][i] += daAggiungere;
+                            grafo[i][j] += daAggiungere;
+                            grafo[casuale][j] -= daAggiungere;
+                        } else {
+                            ripeti = true;
                         }
                     }
+                } else {
+                    ripeti = true;
                 }
-                //tabella[i][k] = - tabella[k][i];                        //riempie i valori opposti
+            } while (ripeti);
+
+            count--;
+            int nZeri = 0;
+            int max = -1;
+            for (int k = 0; k < N - 1; k++) {
+                for (int l = k + 1; l < N; l++) {
+                    if (grafo[k][l] == 0)
+                        nZeri++;
+                    max = Math.max(Math.abs(grafo[k][l]), max);
+                }
+            }
+            if (count <= 0 && nZeri == 0 && max == VITA)
+                fine = true;
+        } while (!fine);
+
+        for (int i = 1; i < N; i++) {
+            for (int j = 0; j < i; j++) {
+                grafo[i][j] = -grafo[j][i];
             }
         }
 
-        for (int a = 0; a < LUNGHEZZA_RIGA; a++) {
-            for (int b = 0; b < LUNGHEZZA_RIGA; b++) {
-                System.out.format("%3d", tabella[a][b]);
+        //stampa
+        int somma = 0;
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                somma += grafo[i][j];
+                System.out.print(String.format("%4d", grafo[i][j]));
             }
-            System.out.println("\n");
+            System.out.println(String.format("%7d", somma));
+            somma = 0;
+        }
+        System.out.println();
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                somma += grafo[j][i];
+            }
+            System.out.print(String.format("%4d", somma));
+            somma = 0;
         }
 
+        return grafo;
     }
 
 }

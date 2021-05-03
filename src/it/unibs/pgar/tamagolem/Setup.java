@@ -16,25 +16,15 @@ public class Setup {
             grafo[i][i] = 0;
         }
 
-        for (int i = 1; i < N - 1; i++) {                // sulle righe si trova chi attacca
+        for (int i = 0; i < N - 1; i++) {                // sulle righe si trova chi attacca
             for (int j = i + 1; j < N - 1; j++) {        // e sulle colonne chi subisce
                 do {
                     grafo[i][j] = NumeriCasuali.estraiIntero(DANNO_MIN, DANNO_MAX);
-
                 } while (grafo[i][j] == 0);
 
                 grafo[j][i] = -grafo[i][j];
             }
 
-        }
-
-        for (int i = 1; i < N - 1; i++) {
-            do {
-                grafo[0][i] = NumeriCasuali.estraiIntero(DANNO_MIN, DANNO_MAX);
-
-            } while (grafo[0][i] == 0 /*&& controlloSomma(grafo[0], i)*/);
-
-            grafo[i][0] = -grafo[0][i];
         }
 
         //Inserisco ultima riga/colonna
