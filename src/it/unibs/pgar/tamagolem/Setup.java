@@ -3,14 +3,13 @@ package it.unibs.pgar.tamagolem;
 import it.unibs.fp.mylib.NumeriCasuali;
 
 public class Setup {
-
+    //COSTANTI
+    public static final int V = 7;
     public static final int N = Elementi.values().length;
 
-    public static final int DANNO_MAX = +7;
-    public static final int DANNO_MIN = -7;
-
-    public static final int VITA = 7;
-
+    public static final int DANNO_MAX = +V;
+    public static final int DANNO_MIN = -V; //non lo usiamo, ma e' per chiarezza
+    //METODI
     public static int[][] generaGrafo() {
         int[][] grafo = new int[N][N];
 
@@ -18,7 +17,7 @@ public class Setup {
         int count = 50;
         do {
             int i, j;
-            boolean ripeti = false;
+            boolean ripeti;
             do {
                 ripeti = false;
 
@@ -102,7 +101,7 @@ public class Setup {
                     max = Math.max(Math.abs(grafo[k][l]), max);
                 }
             }
-            if (count <= 0 && nZeri == 0 && max == VITA)
+            if (count <= 0 && nZeri == 0 && max == V)
                 fine = true;
         } while (!fine);
 
@@ -110,25 +109,6 @@ public class Setup {
             for (int j = 0; j < i; j++) {
                 grafo[i][j] = -grafo[j][i];
             }
-        }
-
-        //stampa
-        int somma = 0;
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                somma += grafo[i][j];
-                System.out.print(String.format("%4d", grafo[i][j]));
-            }
-            System.out.println(String.format("%7d", somma));
-            somma = 0;
-        }
-        System.out.println();
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                somma += grafo[j][i];
-            }
-            System.out.print(String.format("%4d", somma));
-            somma = 0;
         }
 
         return grafo;

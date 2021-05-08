@@ -1,7 +1,5 @@
 package it.unibs.pgar.tamagolem;
 
-import it.unibs.fp.mylib.NumeriCasuali;
-
 public enum Elementi {
     SIMP(0),
     POGGERS(1),
@@ -14,19 +12,9 @@ public enum Elementi {
     KAREN(8);
 
     private int numeroListaElemento;
-    private int indiceElemento;
 
-    public int getNumeroListaElemento() {
-        return numeroListaElemento;
-    }
-
-    public void setNumeroListaElemento(int numeroListaElemento) {
+    Elementi(int numeroListaElemento) {
         this.numeroListaElemento = numeroListaElemento;
-    }
-
-    Elementi(int numeroListaElemento){
-        this.numeroListaElemento = numeroListaElemento;
-        //indiceElemento = NumeriCasuali.estraiIntero(0, 9);
     }
 
 }
