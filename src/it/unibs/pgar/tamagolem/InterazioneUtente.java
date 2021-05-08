@@ -15,16 +15,15 @@ public class InterazioneUtente {
 
     public static final String NOME_GIOCATORE = "Inserisci il nome del giocatore %d: ";
 
-    public static final String GENERAZIONE_TAMAGOLEM = "Creazione TamaGolem numero %d: ";
-
-    public static final String ELEMENTI_PIETRE = "Scegli le pietre DA DAr DA mangiar al TamaGolem %d: ";
+    public static final String GENERAZIONE_TAMAGOLEM = "Giocatore %d, e' ora di evocare il TamaGolem numero %d: ";
+    public static final String CREAZIONE_NOME = "Il tuo TamaGolem si chiamera' %s";
+    public static final String ELEMENTI_PIETRE = "Scegli le pietre DA DAr DA mangiar al TamaGolem %s: ";
     public static final String PIETRE_DISPONIBILI = "%d) %s (%d/%d)";
     public static final String SCELTA_PIETRE = "Quale pietra vuoi DAr DA mangiar? ";
     public static final String ERRORE_PIETRE_FINITE = "ERRORE! Le pietre di questo tipo sono finite.";
 
     //METODI
-    public static Giocatore creaGiocatore(int indiceGiocatore, int[] pietreRimaste) {
-
+    public static Giocatore creaGiocatore(int indiceGiocatore) {
         String nome = OurInputDati.leggiStringaNonVuota(String.format(NOME_GIOCATORE, indiceGiocatore));
 
         ArrayList<TamaGolem> team = new ArrayList<>();
@@ -33,33 +32,28 @@ public class InterazioneUtente {
         return giocatore;
     }
 
-    public static TamaGolem inizializzaTamaGolem(int indiceGiocatore, int[] pietreRimaste) {
-        int i = 0;
-        System.out.println(String.format(GENERAZIONE_TAMAGOLEM, i + 1));
+    public static TamaGolem inizializzaTamaGolem(int indiceGiocatore, int indiceTamaGolem, String[] elementi, ArrayList<String> nomi, int[] pietreRimaste) {
+
+        System.out.println(String.format(GENERAZIONE_TAMAGOLEM, indiceGiocatore, indiceTamaGolem));
+        String nome = TamaGolem.generaNomeTamaGolem(nomi);
+        System.out.println(String.format(CREAZIONE_NOME, nome));
+
         Elementi[] pietreTamagolem = new Elementi[P];
-
-        String[] elementi = new String[N];
-        for (int k = 0; k < N; k++) {
-            elementi[k] = Elementi.values()[k].toString();
-        }
-
-        for (int j = 0; j < P; j++) {
-            System.out.println(String.format(ELEMENTI_PIETRE, i + 1));
-
-            for (int k = 0; k < N; k++) {
-                System.out.println(String.format(PIETRE_DISPONIBILI, k + 1, elementi[k], pietreRimaste[k], S_FRATTO_N));
+        System.out.println(String.format(ELEMENTI_PIETRE, nome));
+        for (int i = 0; i < P; i++) {
+            for (int j = 0; j < N; j++) {
+                System.out.println(String.format(PIETRE_DISPONIBILI, j + 1, elementi[j], pietreRimaste[j], S_FRATTO_N));
             }
             int indice = OurInputDati.leggiIntero(SCELTA_PIETRE, 1, N);
-            while(pietreRimaste[indice - 1] == 0) {
+            while (pietreRimaste[indice - 1] == 0) {
                 System.out.println(ERRORE_PIETRE_FINITE);
                 indice = OurInputDati.leggiIntero(SCELTA_PIETRE, 1, N);
             }
-            pietreRimaste[indice - 1] --;
-            pietreTamagolem[j] = Elementi.values()[indice];
+            pietreRimaste[indice - 1]--;
+            pietreTamagolem[i] = Elementi.values()[indice];
         }
 
-        TamaGolem tamaGolem = new TamaGolem("ciao", pietreTamagolem);
-
+        TamaGolem tamaGolem = new TamaGolem(nome, pietreTamagolem);
         return tamaGolem;
     }
 }

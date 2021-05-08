@@ -49,9 +49,9 @@ public class TamaGolem {
     }
 
     //METODI
-    public String generaNomeTamaGolem(ArrayList<String> nomi) {
+    public static String generaNomeTamaGolem(ArrayList<String> nomi) {
         int indice = NumeriCasuali.estraiIntero(0, nomi.size());
-        nome = nomi.get(indice);
+        String nome = nomi.get(indice);
         nomi.remove(indice);
         return nome;
     }

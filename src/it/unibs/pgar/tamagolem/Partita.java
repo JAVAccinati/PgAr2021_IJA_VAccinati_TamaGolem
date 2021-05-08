@@ -10,13 +10,39 @@ public class Partita {
     public static final int S = (int) Math.ceil((2.0 * G * P) / N) * N;
     public static final int S_FRATTO_N = S / N;
 
+    private static Giocatore[] giocatori = new Giocatore[2];
+
     private static Giocatore giocatore1;
     private static Giocatore giocatore2;
 
+
     //METODI
     public static void eseguiPartita(int grafo[][]) {
+        //setup
+        int indiceGiocatore = 1;
+        int indiceTamaGolem;
+        String[] elementi = setupElementi();
+        ArrayList<String> nomi = setupNomiTamaGolem();
+        int[] pietreRimaste = setupPietreRimaste();
 
-        //genera lista nomi tamagolem
+        giocatori[0] = InterazioneUtente.creaGiocatore(1);
+        indiceTamaGolem = giocatori[indiceGiocatore - 1].getTeam().size() + 1;
+        evocazione(indiceGiocatore, indiceTamaGolem, elementi, nomi, pietreRimaste);
+
+        indiceGiocatore++;
+
+        giocatori[1] = InterazioneUtente.creaGiocatore(2);
+        indiceTamaGolem = giocatori[indiceGiocatore - 1].getTeam().size() + 1;
+        evocazione(indiceGiocatore, indiceTamaGolem, elementi, nomi, pietreRimaste);
+
+        // TODO da qui
+        scontro();
+
+        statoBattaglia();
+
+    }
+
+    private static ArrayList<String> setupNomiTamaGolem() {
         ArrayList<String> nomi = new ArrayList<>();
         for (int i = 0; i < NomiTamaGolem.values().length; i++) {
             char[] nomiChar = NomiTamaGolem.values()[i].toString().toCharArray();
@@ -27,25 +53,27 @@ public class Partita {
             }
             nomi.add(new String(nomiChar));
         }
-
-        int[] pietreRimaste = new int[N];
-        for (int k = 0; k < N; k++) {
-            pietreRimaste[k] = S_FRATTO_N;
-        }
-
-        giocatore1 = InterazioneUtente.creaGiocatore(1, pietreRimaste);
-        giocatore2 = InterazioneUtente.creaGiocatore(2, pietreRimaste);
-
-        evocazione();
-
-        scontro();
-
-        statoBattaglia();
-
+        return nomi;
     }
 
-    private static void evocazione() {
+    private static String[] setupElementi() {
+        String[] elementi = new String[N];
+        for (int i = 0; i < N; i++) {
+            elementi[i] = Elementi.values()[i].toString();
+        }
+        return elementi;
+    }
 
+    private static int[] setupPietreRimaste() {
+        int[] pietreRimaste = new int[N];
+        for (int i = 0; i < N; i++) {
+            pietreRimaste[i] = S_FRATTO_N;
+        }
+        return pietreRimaste;
+    }
+
+    private static void evocazione(int indiceGiocatore, int indiceTamaGolem, String[] elementi, ArrayList<String> nomi, int[] pietreRimaste) {
+        TamaGolem tamaGolem = InterazioneUtente.inizializzaTamaGolem(indiceGiocatore, indiceTamaGolem, elementi, nomi, pietreRimaste);
     }
 
     private static void scontro() {
@@ -58,6 +86,6 @@ public class Partita {
 
     public static boolean giocaDiNuovo() {
 
-        return true;
+        return false;
     }
 }
