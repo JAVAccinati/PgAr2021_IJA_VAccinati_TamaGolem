@@ -17,4 +17,12 @@ public enum Elementi {
         this.numeroListaElemento = numeroListaElemento;
     }
 
+    public int getNumeroListaElemento() {
+        return numeroListaElemento;
+    }
+
+    public void setNumeroListaElemento(int numeroListaElemento) {
+        this.numeroListaElemento = numeroListaElemento;
+    }
+
 }

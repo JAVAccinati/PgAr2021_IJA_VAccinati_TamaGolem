@@ -40,12 +40,16 @@ public class TamaGolem {
         this.pietre = pietre;
     }
 
-    public boolean isStato() {
+    public boolean getStato() {
         return stato;
     }
 
     public void setStato(boolean stato) {
         this.stato = stato;
+    }
+
+    public String getNome(){
+        return nome;
     }
 
     //METODI

@@ -22,6 +22,15 @@ public class InterazioneUtente {
     public static final String SCELTA_PIETRE = "Quale pietra vuoi DAr DA mangiar? ";
     public static final String ERRORE_PIETRE_FINITE = "ERRORE! Le pietre di questo tipo sono finite.";
 
+    public static final String INIZIO_SCONTRO = "Inizio dello scontro: ";
+
+    public static final String SCHIERAMENTO = "Vediamo in campo %s  per il giocatore 1 e %s per il giocatore 2!";
+    public static final String VITA_TAMAGOLEM = "%s ha %d punti vita";
+
+    public static final String LANCIO_PIETRA = "%s lancia la pietra %s";
+    public static final String DANNO_SUBITO = "%s ha subito %d danni...";
+    public static final String DANNO_SUBITO_ZERO = "Nessuno ha subito danni questo turno";
+
     //METODI
     public static Giocatore creaGiocatore(int indiceGiocatore) {
         String nome = OurInputDati.leggiStringaNonVuota(String.format(NOME_GIOCATORE, indiceGiocatore));
@@ -56,4 +65,26 @@ public class InterazioneUtente {
         TamaGolem tamaGolem = new TamaGolem(nome, pietreTamagolem);
         return tamaGolem;
     }
+
+    public static void inizioScontro() {
+        System.out.println(INIZIO_SCONTRO);
+    }
+
+    public static void visualizzaCampoBattaglia(TamaGolem tamaGolem1, TamaGolem tamaGolem2) {
+        System.out.println(String.format(SCHIERAMENTO, tamaGolem1.getNome(), tamaGolem2.getNome()));
+        System.out.println(String.format(VITA_TAMAGOLEM, tamaGolem1.getNome(), tamaGolem1.getVita(), tamaGolem2.getNome(), tamaGolem2.getVita()));
+    }
+
+    public static void esecuzioneTurno(TamaGolem tamaGolem1, TamaGolem tamaGolem2, int danno) {
+        System.out.println(String.format(LANCIO_PIETRA, tamaGolem1.getNome(), tamaGolem1.getPietre()[0].toString()));
+        System.out.println(String.format(LANCIO_PIETRA, tamaGolem2.getNome(), tamaGolem2.getPietre()[0].toString()));
+        if (danno > 0) {
+            System.out.println(String.format(DANNO_SUBITO, tamaGolem2.getNome(), danno));
+        } else if (danno < 0) {
+            System.out.println(String.format(DANNO_SUBITO, tamaGolem1.getNome(), danno));
+        } else {
+            System.out.println(DANNO_SUBITO_ZERO);
+        }
+    }
+
 }

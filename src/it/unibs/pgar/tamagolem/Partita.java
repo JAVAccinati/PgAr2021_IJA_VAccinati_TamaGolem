@@ -12,31 +12,21 @@ public class Partita {
 
     private static Giocatore[] giocatori = new Giocatore[2];
 
-    private static Giocatore giocatore1;
-    private static Giocatore giocatore2;
-
-
     //METODI
     public static void eseguiPartita(int grafo[][]) {
         //setup
         int indiceGiocatore = 1;
-        int indiceTamaGolem;
         String[] elementi = setupElementi();
         ArrayList<String> nomi = setupNomiTamaGolem();
         int[] pietreRimaste = setupPietreRimaste();
 
-        giocatori[0] = InterazioneUtente.creaGiocatore(1);
-        indiceTamaGolem = giocatori[indiceGiocatore - 1].getTeam().size() + 1;
-        evocazione(indiceGiocatore, indiceTamaGolem, elementi, nomi, pietreRimaste);
-
+        //inizializzazione giocatori
+        inizializzaGiocatore(giocatori, indiceGiocatore, elementi, nomi, pietreRimaste);
         indiceGiocatore++;
+        inizializzaGiocatore(giocatori, indiceGiocatore, elementi, nomi, pietreRimaste);
 
-        giocatori[1] = InterazioneUtente.creaGiocatore(2);
-        indiceTamaGolem = giocatori[indiceGiocatore - 1].getTeam().size() + 1;
-        evocazione(indiceGiocatore, indiceTamaGolem, elementi, nomi, pietreRimaste);
-
-        // TODO da qui
-        scontro();
+        //scontro
+        scontro(grafo, giocatori);
 
         statoBattaglia();
 
@@ -72,20 +62,87 @@ public class Partita {
         return pietreRimaste;
     }
 
-    private static void evocazione(int indiceGiocatore, int indiceTamaGolem, String[] elementi, ArrayList<String> nomi, int[] pietreRimaste) {
+    private static void inizializzaGiocatore(Giocatore[] giocatori, int indiceGiocatore, String[] elementi, ArrayList<String> nomi, int[] pietreRimaste) {
+        giocatori[indiceGiocatore] = InterazioneUtente.creaGiocatore(indiceGiocatore + 1);
+        int indiceTamaGolem = giocatori[indiceGiocatore - 1].getTeam().size() + 1;
+        giocatori[indiceGiocatore].getTeam().add(evocazione(indiceGiocatore, indiceTamaGolem, elementi, nomi, pietreRimaste));
+    }
+
+    private static TamaGolem evocazione(int indiceGiocatore, int indiceTamaGolem, String[] elementi, ArrayList<String> nomi, int[] pietreRimaste) {
         TamaGolem tamaGolem = InterazioneUtente.inizializzaTamaGolem(indiceGiocatore, indiceTamaGolem, elementi, nomi, pietreRimaste);
+        return tamaGolem;
     }
 
-    private static void scontro() {
+    private static void scontro(int[][] grafo, Giocatore[] giocatori) {
+        boolean finito = false;
+
+        InterazioneUtente.inizioScontro();
+        do {
+            TamaGolem tamaGolem1 = giocatori[0].getTeam().get(giocatori[0].getTeam().size() - 1);
+            TamaGolem tamaGolem2 = giocatori[1].getTeam().get(giocatori[1].getTeam().size() - 1);
+
+            InterazioneUtente.visualizzaCampoBattaglia(tamaGolem1, tamaGolem2);
+
+            int danno = calcoloDanni(grafo, tamaGolem1, tamaGolem2);
+            InterazioneUtente.esecuzioneTurno(tamaGolem1, tamaGolem2, danno);
+            scalaPietre(tamaGolem1);
+            scalaPietre(tamaGolem2);
+
+            if(danno > 0 && !tamaGolem2.getStato()) {
+                finito = sostituzioneTamaGolem(giocatori[1]);
+            } else if (danno < 0 && !tamaGolem1.getStato()) {
+                finito = sostituzioneTamaGolem(giocatori[0]);
+            }
+
+
+        } while (!finito);
+
 
     }
 
-    private static boolean statoBattaglia() {
-        return true;
+    private static void scalaPietre(TamaGolem tamaGolem) {
+        Elementi[] pietre = tamaGolem.getPietre();
+        Elementi temp = pietre[0];
+        for (int i = 0; i < pietre.length - 1; i++) {
+            pietre[i] = pietre[i + 1];
+        }
+        pietre[pietre.length - 1] = temp;
+    }
+
+    public static int calcoloDanni(int[][] grafo, TamaGolem tamaGolem1, TamaGolem tamaGolem2) {
+        int i = tamaGolem1.getPietre()[0].getNumeroListaElemento();
+        int j = tamaGolem2.getPietre()[0].getNumeroListaElemento();
+        int danno = grafo[i][j];
+        if (danno > 0) {
+            tamaGolem2.setVita(tamaGolem2.getVita() - danno);
+            if(tamaGolem2.getVita() <= 0){
+                tamaGolem2.setStato(false);
+            }
+        } else {
+            tamaGolem1.setVita(tamaGolem1.getVita() - danno);
+            if(tamaGolem2.getVita() <= 0){
+                tamaGolem2.setStato(false);
+            }
+        }
+        return danno;
+    }
+
+    private static boolean sostituzioneTamaGolem(Giocatore giocatore, int indiceGiocatore){
+        boolean finito = false;
+        TamaGolem tamaGolem = giocatore.getTeam().get(giocatore.getTeam().size() - 1);
+        if(tamaGolem.getStato() == false) {
+            if(giocatore.getTeam().size() < G) {
+                int indiceTamaGolem = giocatore.getTeam().size();
+                //TODO SISTEMA argomenti metodi
+                TamaGolem tamaGolem = InterazioneUtente.inizializzaTamaGolem(indiceGiocatore, indiceTamaGolem, elementi, nomi, pietreRimaste);
+            } else {
+                finito = true;
+            }
+        }
+        return finito;
     }
 
     public static boolean giocaDiNuovo() {
-
         return false;
     }
 }
