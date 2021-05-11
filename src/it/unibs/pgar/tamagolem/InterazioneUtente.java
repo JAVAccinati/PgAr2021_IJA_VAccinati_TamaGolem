@@ -85,6 +85,8 @@ public class InterazioneUtente {
         for (int i = 0; i < Utility.P; i++) {
             System.out.println();
             for (int j = 0; j < Utility.N; j++) {
+                //non rendiamo pubblico il numero di pietre rimaste per ciascun tipo in maniera tale che
+                //nessuno dei due giocatori possa sapere quali pietre l'altro abbia assegnato al proprio tamaGolem
                 String stato = pietreRimaste[j] > 0 ? DISPONIBILE : ESAURITO;
                 System.out.println(String.format(PIETRE_DISPONIBILI, j + 1, Utility.Elementi[j], stato));
             }
