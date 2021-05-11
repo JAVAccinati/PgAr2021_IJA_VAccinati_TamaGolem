@@ -5,25 +5,25 @@ import it.unibs.fp.mylib.NumeriCasuali;
 import java.util.ArrayList;
 
 public class TamaGolem {
+
     //COSTANTI
-    public static final int V = 7;
-    public static final int N = Elementi.values().length;
-    public static final int P = (int) Math.ceil((N + 1) / 3.0) + 1;
 
     private String nome;
     private int vita;
-    private Elementi[] pietre;
+    private EnumElementi[] pietre;
     private boolean stato; //vivo (true) o troppo stanco per combattere (false) {perche' i nostri tamagolem non muoiono mai grazie del potere dell'amicizia}
 
     //COSTRUTTORE
-    public TamaGolem(String nome, Elementi[] pietre) {
+
+    public TamaGolem(String nome, EnumElementi[] pietre) {
         this.nome = nome;
-        this.vita = V;
+        this.vita = Utility.V;
         this.pietre = pietre;
         this.stato = true;
     }
 
     //GETTERS AND SETTERS
+
     public int getVita() {
         return vita;
     }
@@ -32,11 +32,11 @@ public class TamaGolem {
         this.vita = vita;
     }
 
-    public Elementi[] getPietre() {
+    public EnumElementi[] getPietre() {
         return pietre;
     }
 
-    public void setPietre(Elementi[] pietre) {
+    public void setPietre(EnumElementi[] pietre) {
         this.pietre = pietre;
     }
 
@@ -48,15 +48,18 @@ public class TamaGolem {
         this.stato = stato;
     }
 
-    public String getNome(){
+    public String getNome() {
         return nome;
     }
 
     //METODI
-    public static String generaNomeTamaGolem(ArrayList<String> nomi) {
-        int indice = NumeriCasuali.estraiIntero(0, nomi.size());
+
+    public static String generaNomeTamaGolem() {
+        ArrayList<String> nomi = Utility.getNomi();
+        int indice = NumeriCasuali.estraiIntero(0, nomi.size() - 1);
         String nome = nomi.get(indice);
         nomi.remove(indice);
+        Utility.setNomi(nomi);
         return nome;
     }
 

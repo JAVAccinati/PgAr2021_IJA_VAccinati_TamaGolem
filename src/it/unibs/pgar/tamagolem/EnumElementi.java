@@ -1,6 +1,11 @@
 package it.unibs.pgar.tamagolem;
 
-public enum Elementi {
+/**
+ * Classe enumerazione che contiene i vari elementi.
+ * Gli indici assegnati a ciascuno sono utili per accetedere alla
+ * matrice dell'equilibrio.
+ */
+public enum EnumElementi {
     SIMP(0),
     POGGERS(1),
     DISCORD_MOD(2),
@@ -11,11 +16,17 @@ public enum Elementi {
     GOLD_DIGGER(7),
     KAREN(8);
 
+    //ATTRIBUTI
+
     private int numeroListaElemento;
 
-    Elementi(int numeroListaElemento) {
+    //COSTRUTTORE
+
+    EnumElementi(int numeroListaElemento) {
         this.numeroListaElemento = numeroListaElemento;
     }
+
+    //GETTER AND SETTER
 
     public int getNumeroListaElemento() {
         return numeroListaElemento;
