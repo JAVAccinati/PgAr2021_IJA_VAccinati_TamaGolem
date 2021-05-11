@@ -1,5 +1,9 @@
 package it.unibs.pgar.tamagolem;
 
+/**
+ * Questa classe enumerazione contiene tutti i nomi papabili per i vari tamaGolem.
+ * QOTD: cosa hanno in comune?
+ */
 public enum NomiTamaGolem {
     AGENZIA_INTERNAZIONALE_PER_L_ENERGIA_ATOMICA,
     ALTO_COMMISSARIATO_DELLE_NAZIONI_UNITE_PER_I_RIFUGIATI,
