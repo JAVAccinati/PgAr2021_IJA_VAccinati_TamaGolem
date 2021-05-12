@@ -1,6 +1,7 @@
 package it.unibs.pgar.tamagolem;
 
 import it.unibs.fp.ourlib.OurInputDati;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 
@@ -33,7 +34,8 @@ public class InterazioneUtente {
     public static final String DANNO_SUBITO_ZERO = "Nessuno ha subito danni questo turno";
     public static final String PREMI_INVIO_PER_CONTINUARE = "Premi invio per continuare ";
 
-    public static final String UGUALE_SET_PIETRE = "%s e %s hanno lo stesso set di pietre, questo perfetto equilibrio li ha mandati entrambi fuori combattimento";
+    public static final String UGUALE_SET_PIETRE = "%s e %s hanno lo stesso set di pietre, questo perfetto equilibrio evoca TETOBILLA, il creatore di tutti i TamaGolem. " +
+            "\nL'essere supremo decide cosi' di rompere lo stallo: lancia l'incatesimo finale ViNteR mandando entrambi i tamaGolem in campo KO!!!";
 
     public static final String PAREGGIO = "Nessun vincitore, l'equilibrio ne e' uscito sovrano!";
     public static final String VINCITORE = "%s si e' rivelato trionfante e riceverà un biscotto da Obama e l'Ucraina da Putin! %s deve solo vergognarsi di se stesso.\n\n" +

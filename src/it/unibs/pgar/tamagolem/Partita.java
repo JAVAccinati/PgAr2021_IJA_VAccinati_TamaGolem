@@ -1,19 +1,32 @@
 package it.unibs.pgar.tamagolem;
 
+/**
+ * Questa classe gestisce tutte le varie fase della partita.
+ * Si appoggia pesantemente sulla classe InterazioneUtente in quanto i vari avvenimenti che qui
+ * vengono calcolati, sono mostrati all'utente grazie alla suddetta classe.
+ */
 public class Partita {
 
     private static Giocatore[] giocatori = new Giocatore[2];
 
     //METODI
+
+    /**
+     * Questo metodo permette facilmente di eseguire la partita piu' volte.
+     * Il valore booleano ritornato rappresenta infatti la volonta' dell'utente di giocare nuovamente o meno.
+     * Al suo interno si può vedere chiaramente la suddivisione nelle varie fasi della partita stessa.
+     * @param grafo: int[][]
+     * @return giocaDiNuovo: boolean
+     */
     public static boolean eseguiPartita(int grafo[][]) {
+
         //setup
-        int indiceGiocatore = 1;
         Utility.setup();
 
         //inizializzazione giocatori
+        int indiceGiocatore = 1;
         inizializzaGiocatore(giocatori, indiceGiocatore);
         indiceGiocatore++;
-
         inizializzaGiocatore(giocatori, indiceGiocatore);
 
         //scontro
@@ -22,6 +35,12 @@ public class Partita {
         return ripeti;
     }
 
+    /**
+     * Crea un oggetto giocatore e lo salva, grazie all'indice(in verita' indice - 1 visto che le persone contano da 1 come i tardi), in un array
+     * di giocatori per permette di passare nei metodi futuri entrambi i giocatori piu' facilemente.
+     * @param giocatori: Giocatori[]
+     * @param indiceGiocatore: int
+     */
     private static void inizializzaGiocatore(Giocatore[] giocatori, int indiceGiocatore) {
         giocatori[indiceGiocatore - 1] = InterazioneUtente.creaGiocatore(indiceGiocatore);
         int indiceTamaGolem = giocatori[indiceGiocatore - 1].getTeam().size() + 1;
@@ -29,14 +48,29 @@ public class Partita {
         InterazioneUtente.nuovaPagina();
     }
 
+    /**
+     * Questo metodo esiste soprattutto per una questione di chiarezza del codice.
+     * Evoca un tamaGolem sfruttando un metodo di InterazioneUtente e lo salva nel team del giocatore all'indice selezionato.
+     * @param giocatore: Giocatore
+     * @param indiceTamaGolem: int
+     * @return tamaGolemCreato: TamaGolem
+     */
     private static TamaGolem evocazione(Giocatore giocatore, int indiceTamaGolem) {
         TamaGolem tamaGolem = InterazioneUtente.inizializzaTamaGolem(giocatore, indiceTamaGolem);
         return tamaGolem;
     }
 
+    /**
+     * Si occupa della parte corposa della partita: il combattimento, la sostituzione dei tamaGolem e l'eventuale constatazione di un vincitore.
+     * I vari momenti sono gestiti da metodi specializzati.
+     * @param grafo: int[]
+     * @param giocatori: Giocatori[]
+     * @return giocaDiNuovo: boolean
+     */
     private static boolean scontro(int[][] grafo, Giocatore[] giocatori) {
         boolean finito = false;
-        int pareggiConsecutivi = 0; //Dopo 5 pareggi consecutivi concludiamo che i 2 tamaGolem hanno lo stesso set di pietre
+        int pareggiConsecutivi = 0; //Dopo 5 pareggi consecutivi concludiamo che i 2 tamaGolem hanno lo stesso set di pietre.
+                                    //In tal caso entrambi vengono mandati KO e, se entrambi i giocatori possono evocare un nuovo tamaGolem, si prosegue lo scontro.
 
         InterazioneUtente.inizioScontro();
         InterazioneUtente.tamaGolemInCampo(giocatori);
@@ -45,6 +79,7 @@ public class Partita {
             TamaGolem tamaGolem1 = giocatori[0].getTeam().get(giocatori[0].getTeam().size() - 1);
             TamaGolem tamaGolem2 = giocatori[1].getTeam().get(giocatori[1].getTeam().size() - 1);
 
+            //Fase di attacco
             int danno = calcoloDanni(grafo, tamaGolem1, tamaGolem2);
             if (danno == 0) {
                 pareggiConsecutivi++;
@@ -55,6 +90,7 @@ public class Partita {
             scalaPietre(tamaGolem1);
             scalaPietre(tamaGolem2);
 
+            //Fase di sostituzione
             if (danno > 0 && !tamaGolem2.getStato()) {
                 finito = sostituzioneTamaGolem(giocatori[1]);
                 if (!finito) {
@@ -67,6 +103,7 @@ public class Partita {
                 }
             }
 
+            //Caso uguale set pietre
             if (pareggiConsecutivi == 5) {
                 pareggiConsecutivi = 0;
                 InterazioneUtente.ugualeSetPietre(tamaGolem1, tamaGolem2);
@@ -74,6 +111,7 @@ public class Partita {
                 tamaGolem2.setStato(false);
                 boolean finito1 = sostituzioneTamaGolem(giocatori[0]);
                 boolean finito2 = sostituzioneTamaGolem(giocatori[1]);
+                //basta che uno solo dei due giocatori abbia esaurito i tamaGolem e la partita finisce
                 finito = finito1 || finito2;
                 if (!finito) {
                     InterazioneUtente.tamaGolemInCampo(giocatori);
@@ -82,6 +120,7 @@ public class Partita {
 
         } while (!finito);
 
+        //Calcolo vincitore
         int vincitore = 0;
         if ((giocatori[0].getTeam().size() == Utility.G && giocatori[0].getTeam().get(Utility.G - 1).getStato() == false)
                 && (giocatori[1].getTeam().size() == Utility.G && giocatori[1].getTeam().get(Utility.G - 1).getStato() == false)) {
@@ -98,6 +137,11 @@ public class Partita {
         return ripeti;
     }
 
+    /**
+     * Questo array fa scalare la pietra lanciata in fondo all'array in dotazione a ciascun tamaGolem per prepararlo al prossimo
+     * turno di attacco
+     * @param tamaGolem: TamaGolem
+     */
     private static void scalaPietre(TamaGolem tamaGolem) {
         EnumElementi[] pietre = tamaGolem.getPietre();
         EnumElementi temp = pietre[0];
@@ -107,6 +151,14 @@ public class Partita {
         pietre[pietre.length - 1] = temp;
     }
 
+    /**
+     * Accedendo alla matrice dell'equilibrio viene calcolato ed inflitto il danno a corretto tamaGolem.
+     * Il danno fatto viene ritornato per poter essere stampato da un altro metodo.
+     * @param grafo: int[][]
+     * @param tamaGolem1: TamaGolem
+     * @param tamaGolem2: TamaGolem
+     * @return dannoFatto: int
+     */
     public static int calcoloDanni(int[][] grafo, TamaGolem tamaGolem1, TamaGolem tamaGolem2) {
         int i = tamaGolem1.getPietre()[0].getNumeroListaElemento();
         int j = tamaGolem2.getPietre()[0].getNumeroListaElemento();
@@ -125,6 +177,13 @@ public class Partita {
         return danno;
     }
 
+    /**
+     * Metodo che entra in gioco quando un tamaGolem va KO.
+     * Qualora il giocatore che sta effetuando la sostituzione ha ancora spazio in team gli permette di evocare un nuovo Tamagolem e ritorna false
+     * In caso contrario la partita deve essere terminata e il metodo ritorna true.
+     * @param giocatore: Giocatore
+     * @return partitaFinita: boolean
+     */
     private static boolean sostituzioneTamaGolem(Giocatore giocatore) {
         boolean finito = false;
         TamaGolem tamaGolem = giocatore.getTeam().get(giocatore.getTeam().size() - 1);

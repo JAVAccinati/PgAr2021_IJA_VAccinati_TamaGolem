@@ -4,6 +4,9 @@ import it.unibs.fp.mylib.NumeriCasuali;
 
 import java.util.ArrayList;
 
+/**
+ * Classe che descrive l'oggetto tamaGolem e i metodi ad esso associati
+ */
 public class TamaGolem {
 
     //COSTANTI
@@ -54,6 +57,13 @@ public class TamaGolem {
 
     //METODI
 
+    /**
+     * Visto che ci teniamo all'esperienza ludica dell'utente generiamo casualmente un nome
+     * per ogni tenero tamaGolem evocato. I nomi provengono dal file NomiTamaGolem.
+     *
+     * P.S. i nomi li scegliamo noi perche' abbiamo deciso un tema
+     * @return nomeTamaGolem: String
+     */
     public static String generaNomeTamaGolem() {
         ArrayList<String> nomi = Utility.getNomi();
         int indice = NumeriCasuali.estraiIntero(0, nomi.size() - 1);
