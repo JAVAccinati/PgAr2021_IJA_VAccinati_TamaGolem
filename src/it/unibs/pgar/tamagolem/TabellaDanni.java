@@ -26,16 +26,16 @@ public class TabellaDanni {
 
         boolean fine = false;
         int count = 50;
-        // 1
+        // Welcome to our TedTalk
         do {
             int i, j;
             boolean ripeti;
             do {
                 ripeti = false;
-                // 2
+                // Creazioni triangolo
                 i = NumeriCasuali.estraiIntero(0, Utility.N - 2);
                 j = NumeriCasuali.estraiIntero(i + 1, Utility.N - 1);
-                // 3
+                // Elemento interno
                 if (!(i == 0 || j == Utility.N - 1)) {
                     int casuale = NumeriCasuali.estraiIntero(0, 3);
                     //se casuale è pari -> triangolo verticale, se casuale è dispari -> triangolo orizzontale,
@@ -59,19 +59,24 @@ public class TabellaDanni {
                             ripeti = true;
                         }
                     }
-                    // 4
+                    // Elemento esterno
                 } else if (i == 0 ^ j == Utility.N - 1) {
+                    //l'elemento si trova sulla prima riga
                     if (i == 0) {
                         int casuale;
                         do {
                             casuale = NumeriCasuali.estraiIntero(1, Utility.N - 1);
                         } while (casuale == j);
+                        //in relazione all'indice dell'elemento estratto scegliamo se aggiungere o togliere 1
                         int daAggiungere = casuale > (Utility.N - 1) / 2 ? +1 : -1;
+                        //scambio i due vertici per distinguere se il secondo e' a sinistra o destra del primo
                         if (casuale > j) {
                             int temp = j;
                             j = casuale;
                             casuale = temp;
                         }
+                        //modifichiamo i vertici del triangolo selezionato.
+                        //il controllo ci impedisce di sforare il limite massimo deciso per il danno applicabile da una mossa.
                         if (Math.abs(grafo[casuale][j] + daAggiungere) <= DANNO_MAX && Math.abs(grafo[i][j] - daAggiungere) <= DANNO_MAX && Math.abs(grafo[i][casuale] + daAggiungere) <= DANNO_MAX) {
                             grafo[casuale][j] += daAggiungere;
                             grafo[i][j] -= daAggiungere;
@@ -79,17 +84,22 @@ public class TabellaDanni {
                         } else {
                             ripeti = true;
                         }
+                        //l'elemento si trova sulla ultima colonna
                     } else {
                         int casuale;
                         do {
                             casuale = NumeriCasuali.estraiIntero(0, Utility.N - 2);
                         } while (casuale == i);
+                        //in relazione all'indice dell'elemento estratto scegliamo se aggiungere o togliere 1
                         int daAggiungere = casuale > (Utility.N - 1) / 2 ? +1 : -1;
+                        //scambio i due vertici per distinguere se il secondo e' a sopra o sotto del primo
                         if (casuale > i) {
                             int temp = i;
                             i = casuale;
                             casuale = temp;
                         }
+                        //modifichiamo i vertici del triangolo selezionato.
+                        //il controllo ci impedisce di sforare il limite massimo deciso per il danno applicabile da una mossa.
                         if (Math.abs(grafo[casuale][i] + daAggiungere) <= DANNO_MAX && Math.abs(grafo[i][j] + daAggiungere) <= DANNO_MAX && Math.abs(grafo[casuale][j] - daAggiungere) <= DANNO_MAX) {
                             grafo[casuale][i] += daAggiungere;
                             grafo[i][j] += daAggiungere;
