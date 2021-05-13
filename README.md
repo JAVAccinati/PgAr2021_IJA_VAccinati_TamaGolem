@@ -1,7 +1,5 @@
 # PgAr2021_IJA_VAccinati_TamaGolem
 
-<img src="foto.jpg">
+![image](25x25.png)
 
-<img src="25x25.png">
-
-<img src="vinter_ci_ama.png">
+![image](vinter_ci_ama.png)
