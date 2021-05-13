@@ -11,10 +11,19 @@ public class TabellaDanni {
 
     //METODI
 
+    /**
+     * Il metodo e' particolarmente complesso e gestisce la generazione della matrice dell'equilibrio.
+     * Per spiegarlo facciamo riferimento al README.md su consiglio di EnricoBilla
+     * @return grafoGenerato: int[][]
+     */
     public static int[][] generaGrafo() {
         int[][] grafo = new int[Utility.N][Utility.N];
 
-        boolean fine = false; //tutti != 0, per almeno count volte e almeno uno == vita
+        //la generazione termina quando tutti gli elementi sopra la diagonale della matrice
+        //sono tutti diversi da 0, il ciclo e' stato eseguito per almeno count volte(inutile, ma piace ad alessio) e
+        // almeno uno uguale alla vita massima dei tamaGolem.
+
+        boolean fine = false;
         int count = 50;
         do {
             int i, j;
