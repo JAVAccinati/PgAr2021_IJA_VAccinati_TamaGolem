@@ -23,7 +23,8 @@ A questo punto possiamo affermare come per ciascun punto passino esattemente due
 Fatta questa premessa introduciamo la proprieta' che ci ha permesso di risolvere il problema.
 Prendiamo 3 punti a caso nel triangolo superiore detti 1,2 e 3 in modo tale che per questi punti passino solo 3 percorsi:
 A e B per 1, B e C per 2 e C e A per 3.
-Abbiamo cosi' creato un percorso chiuso 
+Abbiamo cosi' creato un percorso chiuso, un triangolo i cui vertici sono gli elementi selezionati.
+Come si puo' vedere in figura, modificando con criterio solo questi tre valori, i 3 percorsi rimangono bilanciati.
 
 <img src="funzionamento_triangolo.jpg" height="300">
 
@@ -37,7 +38,7 @@ Abbiamo cosi' creato un percorso chiuso
 
 ### 
 
-<img src="generazione_triangolo_caso_interno.jpg" height="300" margin="auto">
+<img src="generazione_triangolo_caso_interno.jpg" height="300" text-align="center">
 
 ### 6
 
