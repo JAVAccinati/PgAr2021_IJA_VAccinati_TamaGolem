@@ -13,27 +13,29 @@ public class TabellaDanni {
 
     /**
      * Il metodo e' particolarmente complesso e gestisce la generazione della matrice dell'equilibrio.
-     * Per spiegarlo facciamo riferimento al README.md su consiglio di EnricoBilla
+     * Per spiegarlo facciamo riferimento al README.md su consiglio di EnricoBilla.
+     * I numeri commentati rappresentano il paragrafo al quale fare riferimento
      * @return grafoGenerato: int[][]
      */
     public static int[][] generaGrafo() {
         int[][] grafo = new int[Utility.N][Utility.N];
 
-        //la generazione termina quando tutti gli elementi sopra la diagonale della matrice
+        //La generazione termina quando tutti gli elementi sopra la diagonale della matrice
         //sono tutti diversi da 0, il ciclo e' stato eseguito per almeno count volte(inutile, ma piace ad alessio) e
         // almeno uno uguale alla vita massima dei tamaGolem.
 
         boolean fine = false;
         int count = 50;
+        // 1
         do {
             int i, j;
             boolean ripeti;
             do {
                 ripeti = false;
-
+                // 2
                 i = NumeriCasuali.estraiIntero(0, Utility.N - 2);
                 j = NumeriCasuali.estraiIntero(i + 1, Utility.N - 1);
-                //non sono sui lati dell tabella
+                // 3
                 if (!(i == 0 || j == Utility.N - 1)) {
                     int casuale = NumeriCasuali.estraiIntero(0, 3);
                     //se casuale è pari -> triangolo verticale, se casuale è dispari -> triangolo orizzontale,
@@ -57,7 +59,7 @@ public class TabellaDanni {
                             ripeti = true;
                         }
                     }
-                    //sono sui lati della tabella ma non nell'angolo
+                    // 4
                 } else if (i == 0 ^ j == Utility.N - 1) {
                     if (i == 0) {
                         int casuale;
@@ -96,11 +98,13 @@ public class TabellaDanni {
                             ripeti = true;
                         }
                     }
+                    // L'elemento si trova in alto a destra
                 } else {
                     ripeti = true;
                 }
             } while (ripeti);
 
+            //controllo limiti della generazione
             count--;
             int nZeri = 0;
             int max = -1;
@@ -115,6 +119,7 @@ public class TabellaDanni {
                 fine = true;
         } while (!fine);
 
+        //generazione della zona inferiore alla diagonale della matrice
         for (int i = 1; i < Utility.N; i++) {
             for (int j = 0; j < i; j++) {
                 grafo[i][j] = -grafo[j][i];

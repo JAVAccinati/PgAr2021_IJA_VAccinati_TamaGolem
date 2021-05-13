@@ -31,7 +31,7 @@ Come si puo' vedere in figura, modificando con criterio solo questi tre valori, 
 Abbiamo cosi' trovato un modo per modificare liberamente e a piacimento i valori della matrice senza rovinarne l'equilibrio.  
 Sfruttando questa proprieta' possiamo generare il grafo.
 
-###
+### 2
 Per inizializzare in pratica la matrice selezioniamo allora un elemento a caso nel triangolo superiore
 e da questo generiamo un triangolo di cui modificheremo i vertici.
 
@@ -40,18 +40,27 @@ l'elemento estratto e i vari processi verrano spiegati in seguito.
 
 <div style="text-align: center"><img src="divisione_zone_interne_esterne_angolo.jpg" height="300"></div>
 
-N.B. Il quadrato rosso, ovv
-###
+N.B. Il quadrato rosso, ovvero l'angolo in alto a destra, potrebbe dare vita a veramente troppi triangoli comportando una
+complicazione inutile e non aggiungendo nulla al programma, per questo motivo abbiamo deciso di non estrarlo
 
-
-
-### 
+### 3
+Quando l'elemento estratto appartiene alla zona interna(BLU nell'immagine divisione_zone_interne_esterne_angolo)
+possiamo individuare solamente due triangoli che lo hanno come vertice, come vedete in figura.
 
 <div style="text-align: center"><img src="generazione_triangolo_caso_interno.jpg" height="300"></div>
 
-### 6
+### 4
+Quando l'elemento estratto appartiene alla zona interna(VERDE nell'immagine divisione_zone_interne_esterne_angolo)
+potremmo formare numerosi triangoli che lo hanno come vertice.
+Per non complicare troppo i controlli selezioniamo il secondo vertice del triangolo come uno degli elementi sulla stessa riga
+di quello estratto, in modo che il terzo risulti obbligato.
 
-<div style="text-align: center"><img src="generazione_triangolo_caso_esterno.jpg" height="300"></div>
+Qualora il secondo vertice selezionato si trovi a destra o a sinistra del primo la generazione del terzo e' leggermente diversa
+come si vede in figura.
+
+|descr|
+|:---:|
+|<img src="generazione_triangolo_caso_esterno.jpg" height="300">|
 
 ## Not flexing just sayin'
 
