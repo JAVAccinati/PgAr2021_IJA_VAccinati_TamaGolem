@@ -29,9 +29,10 @@ Come si puo' vedere in figura, modificando con criterio solo questi tre valori, 
 <img src="funzionamento_triangolo.jpg" height="300">
 
 Abbiamo cosi' trovato un modo per modificare liberamente e a piacimento i valori della matrice senza rovinarne l'equilibrio.  
-Sfruttando questa propriet
-###
+Sfruttando questa proprieta' possiamo generare il grafo.
 
+###
+Per inizializzare 
 <img src="divisione_zone_interne_esterne_angolo.jpg" height="300">
 
 ###
@@ -40,7 +41,7 @@ Sfruttando questa propriet
 
 ### 
 
-<img src="generazione_triangolo_caso_interno.jpg" height="300" style="text-align:center">
+<div style="text-align:center"><img src="generazione_triangolo_caso_interno.jpg" height="300"></div>
 
 ### 6
 
