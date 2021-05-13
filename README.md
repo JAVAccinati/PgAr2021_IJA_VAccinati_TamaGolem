@@ -24,10 +24,12 @@ Fatta questa premessa introduciamo la proprieta' che ci ha permesso di risolvere
 Prendiamo 3 punti a caso nel triangolo superiore detti 1,2 e 3 in modo tale che per questi punti passino solo 3 percorsi:
 A e B per 1, B e C per 2 e C e A per 3.
 Abbiamo cosi' creato un percorso chiuso, un triangolo i cui vertici sono gli elementi selezionati.
-Come si puo' vedere in figura, modificando con criterio solo questi tre valori, i 3 percorsi rimangono bilanciati.
+Come si puo' vedere in figura, modificando con criterio solo questi tre valori, i tre percorsi rimangono bilanciati.
 
 <img src="funzionamento_triangolo.jpg" height="300">
 
+Abbiamo cosi' trovato un modo per modificare liberamente e a piacimento i valori della matrice senza rovinarne l'equilibrio.  
+Sfruttando questa propriet
 ###
 
 <img src="divisione_zone_interne_esterne_angolo.jpg" height="300">
@@ -38,7 +40,7 @@ Come si puo' vedere in figura, modificando con criterio solo questi tre valori, 
 
 ### 
 
-<img src="generazione_triangolo_caso_interno.jpg" height="300" text-align="center">
+<img src="generazione_triangolo_caso_interno.jpg" height="300" style="text-align:center">
 
 ### 6
 
