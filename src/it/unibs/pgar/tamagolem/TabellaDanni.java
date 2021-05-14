@@ -26,16 +26,16 @@ public class TabellaDanni {
 
         boolean fine = false;
         int count = 50;
-        // Welcome to our TedTalk
+        // 1. Welcome to our TedTalk
         do {
             int i, j;
             boolean ripeti;
             do {
                 ripeti = false;
-                // Creazioni triangolo
+                // 2. Creazione triangolo
                 i = NumeriCasuali.estraiIntero(0, Utility.N - 2);
                 j = NumeriCasuali.estraiIntero(i + 1, Utility.N - 1);
-                // Elemento interno
+                // 3. Elemento interno
                 if (!(i == 0 || j == Utility.N - 1)) {
                     int casuale = NumeriCasuali.estraiIntero(0, 3);
                     //se casuale è pari -> triangolo verticale, se casuale è dispari -> triangolo orizzontale,
@@ -59,7 +59,7 @@ public class TabellaDanni {
                             ripeti = true;
                         }
                     }
-                    // Elemento esterno
+                    // 4. Elemento esterno
                 } else if (i == 0 ^ j == Utility.N - 1) {
                     //l'elemento si trova sulla prima riga
                     if (i == 0) {
