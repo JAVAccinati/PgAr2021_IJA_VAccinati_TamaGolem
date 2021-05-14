@@ -18,10 +18,7 @@ public class Partita {
      * @param grafo: int[][]
      * @return giocaDiNuovo: boolean
      */
-    public static boolean eseguiPartita(int grafo[][]) {
-
-        //setup
-        Utility.setup();
+    public static boolean eseguiPartita(int[][] grafo) {
 
         //inizializzazione giocatori
         int indiceGiocatore = 1;
@@ -56,8 +53,7 @@ public class Partita {
      * @return tamaGolemCreato: TamaGolem
      */
     private static TamaGolem evocazione(Giocatore giocatore, int indiceTamaGolem) {
-        TamaGolem tamaGolem = InterazioneUtente.inizializzaTamaGolem(giocatore, indiceTamaGolem);
-        return tamaGolem;
+        return InterazioneUtente.inizializzaTamaGolem(giocatore, indiceTamaGolem);
     }
 
     /**
@@ -159,7 +155,7 @@ public class Partita {
      * @param tamaGolem2: TamaGolem
      * @return dannoFatto: int
      */
-    public static int calcoloDanni(int[][] grafo, TamaGolem tamaGolem1, TamaGolem tamaGolem2) {
+    private static int calcoloDanni(int[][] grafo, TamaGolem tamaGolem1, TamaGolem tamaGolem2) {
         int i = tamaGolem1.getPietre()[0].getNumeroListaElemento();
         int j = tamaGolem2.getPietre()[0].getNumeroListaElemento();
         int danno = grafo[i][j];
@@ -182,12 +178,12 @@ public class Partita {
      * Qualora il giocatore che sta effetuando la sostituzione ha ancora spazio in team gli permette di evocare un nuovo Tamagolem e ritorna false
      * In caso contrario la partita deve essere terminata e il metodo ritorna true.
      * @param giocatore: Giocatore
-     * @return partitaFinita: boolean
+     * @return partitaFinita: booleanGvoi
      */
     private static boolean sostituzioneTamaGolem(Giocatore giocatore) {
         boolean finito = false;
         TamaGolem tamaGolem = giocatore.getTeam().get(giocatore.getTeam().size() - 1);
-        if (tamaGolem.getStato() == false) {
+        if (!tamaGolem.getStato()) {
             if (giocatore.getTeam().size() < Utility.G) {
                 int indiceTamaGolem = giocatore.getTeam().size() + 1;
                 TamaGolem nuovoTamaGolem = InterazioneUtente.inizializzaTamaGolem(giocatore, indiceTamaGolem);

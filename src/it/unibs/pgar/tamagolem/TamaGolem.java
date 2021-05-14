@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class TamaGolem {
 
-    //COSTANTI
+    //ATTRIBUTI
 
     private String nome;
     private int vita;

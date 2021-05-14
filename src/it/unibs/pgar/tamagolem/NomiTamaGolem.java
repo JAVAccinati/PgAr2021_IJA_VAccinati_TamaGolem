@@ -133,12 +133,5 @@ public enum NomiTamaGolem {
     THOMAS_WOODROW_WILSON,
     CARLOS_FILIPE_XIMENES_BELO,
     MALALA_YOUSAFZAI,
-    MUHAMMAD_YUNUS;
-
-    private boolean usato;
-
-    NomiTamaGolem() {
-        this.usato = false;
-    }
-
+    MUHAMMAD_YUNUS
 }

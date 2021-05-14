@@ -58,7 +58,7 @@ public class Utility {
      *
      * @return nomi: ArrayList String
      */
-    public static ArrayList<String> setupNomiTamaGolem() {
+    private static ArrayList<String> setupNomiTamaGolem() {
         ArrayList<String> nomi = new ArrayList<>();
         for (int i = 0; i < NomiTamaGolem.values().length; i++) {
             char[] nomiChar = NomiTamaGolem.values()[i].toString().toCharArray();
@@ -78,7 +78,7 @@ public class Utility {
      *
      * @return elementi: String[]
      */
-    public static String[] setupElementi() {
+    private static String[] setupElementi() {
         String[] elementi = new String[N];
         for (int i = 0; i < N; i++) {
             elementi[i] = EnumElementi.values()[i].toString();
@@ -92,12 +92,12 @@ public class Utility {
      *
      * @return pietreRimaste: int[]
      */
-    public static int[] setupPietreRimaste() {
+    private static int[] setupPietreRimaste() {
         int[] pietreRimaste = new int[N];
         for (int i = 0; i < N; i++) {
             pietreRimaste[i] = S_FRATTO_N;
         }
         return pietreRimaste;
     }
-
+ 
 }
