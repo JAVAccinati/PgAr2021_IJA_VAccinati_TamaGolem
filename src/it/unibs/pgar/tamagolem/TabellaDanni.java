@@ -15,6 +15,7 @@ public class TabellaDanni {
      * Il metodo e' particolarmente complesso e gestisce la generazione della matrice dell'equilibrio.
      * Per spiegarlo facciamo riferimento al README.md su consiglio di EnricoBilla.
      * I numeri commentati rappresentano il paragrafo al quale fare riferimento
+     *
      * @return grafoGenerato: int[][]
      */
     public static int[][] generaGrafo() {

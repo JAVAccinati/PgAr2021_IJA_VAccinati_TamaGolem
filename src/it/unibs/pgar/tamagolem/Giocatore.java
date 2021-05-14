@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Questa classe descrive l'oggetto giocatore, definito da un nome e il suo team di tamaGolem.
  */
-public class  Giocatore {
+public class Giocatore {
 
     //ATTRIBUTI
 

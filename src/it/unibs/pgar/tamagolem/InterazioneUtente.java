@@ -56,13 +56,14 @@ public class InterazioneUtente {
     /**
      * Crea un oggetto giocatore dopo aver ricevuto in input il nome desiderato.
      * Ha come argomento l'indice del giocatore che si vuole creare.
+     *
      * @param indiceGiocatore: int
      * @return giocatoreCreato: Giocatore
      */
     public static Giocatore creaGiocatore(int indiceGiocatore, String nomeEsistente) {
         String nome;
         nome = OurInputDati.leggiStringaNonVuota(String.format(NOME_GIOCATORE, indiceGiocatore));
-        while(nomeEsistente.equals(nome)) {
+        while (nomeEsistente.equals(nome)) {
             System.out.println(NOME_GIOCATORE_ESISTENTE);
             nome = OurInputDati.leggiStringaNonVuota(String.format(NOME_GIOCATORE, indiceGiocatore));
         }
@@ -76,7 +77,8 @@ public class InterazioneUtente {
     /**
      * Crea un oggetto tamaGolem, caratterizzato da un nome (che viene scelto casualmente tra quelli disponibili) e il set di pietre a lui asseganto.
      * I due argomenti passati hanno il solo scopo di rendere piu' chiara l'interazione con l'utente.
-     * @param giocatore: Giocatore
+     *
+     * @param giocatore:       Giocatore
      * @param indiceTamaGolem: int
      * @return tamaGolemCreato: TamaGolem
      */
@@ -134,6 +136,7 @@ public class InterazioneUtente {
     /**
      * Accedendo ai dati contenuti nei team dei due giocatori, questo metodo visualizza la situazione sul campo di battaglia:
      * quali tamaGolem si stanno affrontando e quanti punti salute hanno.
+     *
      * @param giocatori: Giocatori
      */
     public static void tamaGolemInCampo(Giocatore[] giocatori) {
@@ -147,6 +150,7 @@ public class InterazioneUtente {
 
     /**
      * Stampa i punti salute dei due tamaGolem schierati da ciascuno dei giocatori
+     *
      * @param giocatori: Giocatori
      */
     public static void visualizzaVita(Giocatore[] giocatori) {
@@ -161,8 +165,9 @@ public class InterazioneUtente {
      * Nonostante i vari calcoli e modifiche avvengano nel metodo scontro della classe Partita, questo metodo
      * rende partecipe i giocatori di quanto sta accadendo sul campo di battaglia mentre due tamaGolem combattono.
      * Riceve come argomento i due giocatori e il danno che e' stato fatto in quel determinato turno.
+     *
      * @param giocatori: Giocatori
-     * @param danno: int
+     * @param danno:     int
      */
     public static void esecuzioneTurno(Giocatore[] giocatori, int danno) {
         TamaGolem tamaGolem1 = giocatori[0].getTeam().get(giocatori[0].getTeam().size() - 1);
@@ -189,6 +194,7 @@ public class InterazioneUtente {
     /**
      * Metodo che stampa un messaggio specifico nell'eventualita che 2 tamaGolem abbaino lo stesso set di pietre,
      * condizione che porterebbe ad una battaglia infinita.
+     *
      * @param tamaGolem1: tamaGolem
      * @param tamaGolem2: tamaGolem
      */
@@ -200,6 +206,7 @@ public class InterazioneUtente {
     /**
      * Visualizza la matrice dell'equilibrio e la relativa legenda per permettere agli utenti di comprenderla
      * piu' facilmente
+     *
      * @param grafo
      */
     public static void stampaGrafo(int[][] grafo) {
@@ -228,7 +235,8 @@ public class InterazioneUtente {
      * Stampa a console il risultato della battaglia e la matrice dell'equilibrio che ha sancito le
      * sorti dello scontro.
      * Ritorna infine un valore booleano che esprime la volonta' degli utenti di giocare nuovamente o meno.
-     * @param grafo: int[][]
+     *
+     * @param grafo:     int[][]
      * @param giocatori: Giocatori[][]
      * @param vincitore: int
      * @return giocaAncora: boolean
@@ -265,6 +273,7 @@ public class InterazioneUtente {
 
     /**
      * Stampa l'intera squadra vincitrice!
+     *
      * @param giocatore
      */
     public static void stampaSquadraVincitrice(Giocatore giocatore) {

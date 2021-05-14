@@ -1,7 +1,7 @@
 package it.unibs.pgar.tamagolem;
 
 /**
- * Come al solito il Main. Detto anche il deserto, detto anche i DM di CallMeRush. 
+ * Come al solito il Main. Detto anche il deserto, detto anche i DM di CallMeRush.
  */
 public class TamaGolemMain {
 

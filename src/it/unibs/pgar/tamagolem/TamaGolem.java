@@ -60,8 +60,9 @@ public class TamaGolem {
     /**
      * Visto che ci teniamo all'esperienza ludica dell'utente generiamo casualmente un nome
      * per ogni tenero tamaGolem evocato. I nomi provengono dal file NomiTamaGolem.
-     *
+     * <p>
      * P.S. i nomi li scegliamo noi perche' abbiamo deciso un tema
+     *
      * @return nomeTamaGolem: String
      */
     public static String generaNomeTamaGolem() {
