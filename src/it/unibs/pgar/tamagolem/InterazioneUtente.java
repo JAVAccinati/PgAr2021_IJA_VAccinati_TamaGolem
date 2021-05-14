@@ -188,6 +188,7 @@ public class InterazioneUtente {
      */
     public static void ugualeSetPietre(TamaGolem tamaGolem1, TamaGolem tamaGolem2) {
         System.out.println(String.format(UGUALE_SET_PIETRE, tamaGolem1.getNome(), tamaGolem2.getNome()));
+        System.out.println();
     }
 
     /**
