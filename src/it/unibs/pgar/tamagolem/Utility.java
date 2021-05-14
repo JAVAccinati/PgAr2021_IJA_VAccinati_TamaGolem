@@ -10,12 +10,12 @@ public class Utility {
 
     //COSTANTI
 
-    public static final int N = EnumElementi.values().length; //9
-    public static final int P = (int) Math.ceil((N + 1) / 3.0) + 1; //5
-    public static final int G = (int) Math.ceil((N - 1) * (N - 2) / (2.0 * P)); //6
-    public static final int S = (int) Math.ceil((2.0 * G * P) / N) * N; //7 * 9 = 63 (7 per ogni elemento)
-    public static final int S_FRATTO_N = S / N; //7
-    public static final int V = 7;
+    public static final int N = EnumElementi.values().length; //9 numero di elementi
+    public static final int P = (int) Math.ceil((N + 1) / 3.0) + 1; //5 pietre da dare
+    public static final int G = (int) Math.ceil((N - 1) * (N - 2) / (2.0 * P)); //6 numero di TamaGolem per team
+    public static final int S = (int) Math.ceil((2.0 * G * P) / N) * N; //7 * 9 = 63 (7 per ogni elemento) pietre disponibili
+    public static final int S_FRATTO_N = S / N; //7 pietre disponibili per ogni elemento
+    public static final int V = 7; // vita iniziale
 
     public static final String[] Elementi = setupElementi();
 

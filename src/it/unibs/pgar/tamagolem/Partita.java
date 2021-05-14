@@ -15,6 +15,7 @@ public class Partita {
      * Questo metodo permette facilmente di eseguire la partita piu' volte.
      * Il valore booleano ritornato rappresenta infatti la volonta' dell'utente di giocare nuovamente o meno.
      * Al suo interno si può vedere chiaramente la suddivisione nelle varie fasi della partita stessa.
+     *
      * @param grafo: int[][]
      * @return giocaDiNuovo: boolean
      */
@@ -22,9 +23,9 @@ public class Partita {
 
         //inizializzazione giocatori
         int indiceGiocatore = 1;
-        inizializzaGiocatore(giocatori, indiceGiocatore);
+        inizializzaGiocatore(giocatori, indiceGiocatore, "");
         indiceGiocatore++;
-        inizializzaGiocatore(giocatori, indiceGiocatore);
+        inizializzaGiocatore(giocatori, indiceGiocatore, giocatori[0].getNome());
 
         //scontro
         boolean ripeti = scontro(grafo, giocatori);
@@ -35,11 +36,12 @@ public class Partita {
     /**
      * Crea un oggetto giocatore e lo salva, grazie all'indice(in verita' indice - 1 visto che le persone contano da 1 come i tardi), in un array
      * di giocatori per permette di passare nei metodi futuri entrambi i giocatori piu' facilemente.
-     * @param giocatori: Giocatori[]
+     *
+     * @param giocatori:       Giocatori[]
      * @param indiceGiocatore: int
      */
-    private static void inizializzaGiocatore(Giocatore[] giocatori, int indiceGiocatore) {
-        giocatori[indiceGiocatore - 1] = InterazioneUtente.creaGiocatore(indiceGiocatore);
+    private static void inizializzaGiocatore(Giocatore[] giocatori, int indiceGiocatore, String nomeEsistente) {
+        giocatori[indiceGiocatore - 1] = InterazioneUtente.creaGiocatore(indiceGiocatore, nomeEsistente);
         int indiceTamaGolem = giocatori[indiceGiocatore - 1].getTeam().size() + 1;
         giocatori[indiceGiocatore - 1].getTeam().add(evocazione(giocatori[indiceGiocatore - 1], indiceTamaGolem));
         InterazioneUtente.nuovaPagina();
@@ -48,7 +50,8 @@ public class Partita {
     /**
      * Questo metodo esiste soprattutto per una questione di chiarezza del codice.
      * Evoca un tamaGolem sfruttando un metodo di InterazioneUtente e lo salva nel team del giocatore all'indice selezionato.
-     * @param giocatore: Giocatore
+     *
+     * @param giocatore:       Giocatore
      * @param indiceTamaGolem: int
      * @return tamaGolemCreato: TamaGolem
      */
@@ -59,14 +62,15 @@ public class Partita {
     /**
      * Si occupa della parte corposa della partita: il combattimento, la sostituzione dei tamaGolem e l'eventuale constatazione di un vincitore.
      * I vari momenti sono gestiti da metodi specializzati.
-     * @param grafo: int[]
+     *
+     * @param grafo:     int[]
      * @param giocatori: Giocatori[]
      * @return giocaDiNuovo: boolean
      */
     private static boolean scontro(int[][] grafo, Giocatore[] giocatori) {
         boolean finito = false;
         int pareggiConsecutivi = 0; //Dopo 5 pareggi consecutivi concludiamo che i 2 tamaGolem hanno lo stesso set di pietre.
-                                    //In tal caso entrambi vengono mandati KO e, se entrambi i giocatori possono evocare un nuovo tamaGolem, si prosegue lo scontro.
+        //In tal caso entrambi vengono mandati KO e, se entrambi i giocatori possono evocare un nuovo tamaGolem, si prosegue lo scontro.
 
         InterazioneUtente.inizioScontro();
         InterazioneUtente.tamaGolemInCampo(giocatori);
@@ -136,6 +140,7 @@ public class Partita {
     /**
      * Questo array fa scalare la pietra lanciata in fondo all'array in dotazione a ciascun tamaGolem per prepararlo al prossimo
      * turno di attacco
+     *
      * @param tamaGolem: TamaGolem
      */
     private static void scalaPietre(TamaGolem tamaGolem) {
@@ -150,7 +155,8 @@ public class Partita {
     /**
      * Accedendo alla matrice dell'equilibrio viene calcolato ed inflitto il danno a corretto tamaGolem.
      * Il danno fatto viene ritornato per poter essere stampato da un altro metodo.
-     * @param grafo: int[][]
+     *
+     * @param grafo:      int[][]
      * @param tamaGolem1: TamaGolem
      * @param tamaGolem2: TamaGolem
      * @return dannoFatto: int
@@ -177,6 +183,7 @@ public class Partita {
      * Metodo che entra in gioco quando un tamaGolem va KO.
      * Qualora il giocatore che sta effetuando la sostituzione ha ancora spazio in team gli permette di evocare un nuovo Tamagolem e ritorna false
      * In caso contrario la partita deve essere terminata e il metodo ritorna true.
+     *
      * @param giocatore: Giocatore
      * @return partitaFinita: booleanGvoi
      */

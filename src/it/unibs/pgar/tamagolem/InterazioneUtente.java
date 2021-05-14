@@ -13,6 +13,7 @@ public class InterazioneUtente {
     //COSTANTI
 
     public static final String NOME_GIOCATORE = "Inserisci il nome del giocatore %d: ";
+    public static final String NOME_GIOCATORE_ESISTENTE = "L'altro giocatore si chiama gia' cosi', un po' di fantasia...";
 
     public static final String GENERAZIONE_TAMAGOLEM = "%s, e' ora di evocare il TamaGolem numero %d: ";
     public static final String CREAZIONE_NOME = "Il tuo TamaGolem si chiamera' %s";
@@ -21,7 +22,7 @@ public class InterazioneUtente {
     public static final String PIETRE_DISPONIBILI = "%d) %-15s %s";
     public static final String DISPONIBILE = "\tAvailable!"; //free shipping with JAVAccinatiPrime !!!
     public static final String ESAURITO = "\tOut of stock... ";
-    public static final String SCELTA_PIETRE = "Quale pietra vuoi DAr DA mangiar? ";
+    public static final String SCELTA_PIETRE = "Quale pietra vuoi DAr DA mangiar? (Date: %d/%d) ";
     public static final String ERRORE_PIETRE_FINITE = "ERRORE! Le pietre di questo tipo sono finite.";
 
     public static final String INIZIO_SCONTRO = "Inizio dello scontro: ";
@@ -58,8 +59,13 @@ public class InterazioneUtente {
      * @param indiceGiocatore: int
      * @return giocatoreCreato: Giocatore
      */
-    public static Giocatore creaGiocatore(int indiceGiocatore) {
-        String nome = OurInputDati.leggiStringaNonVuota(String.format(NOME_GIOCATORE, indiceGiocatore));
+    public static Giocatore creaGiocatore(int indiceGiocatore, String nomeEsistente) {
+        String nome;
+        nome = OurInputDati.leggiStringaNonVuota(String.format(NOME_GIOCATORE, indiceGiocatore));
+        while(nomeEsistente.equals(nome)) {
+            System.out.println(NOME_GIOCATORE_ESISTENTE);
+            nome = OurInputDati.leggiStringaNonVuota(String.format(NOME_GIOCATORE, indiceGiocatore));
+        }
 
         ArrayList<TamaGolem> team = new ArrayList<>();
 
@@ -92,10 +98,10 @@ public class InterazioneUtente {
                 String stato = pietreRimaste[j] > 0 ? DISPONIBILE : ESAURITO;
                 System.out.println(String.format(PIETRE_DISPONIBILI, j + 1, Utility.Elementi[j], stato));
             }
-            int indice = OurInputDati.leggiIntero(SCELTA_PIETRE, 1, Utility.N);
+            int indice = OurInputDati.leggiIntero(String.format(SCELTA_PIETRE, i, Utility.P), 1, Utility.N);
             while (pietreRimaste[indice - 1] == 0) {
                 System.out.println(ERRORE_PIETRE_FINITE);
-                indice = OurInputDati.leggiIntero(SCELTA_PIETRE, 1, Utility.N);
+                indice = OurInputDati.leggiIntero(String.format(SCELTA_PIETRE, i, Utility.P), 1, Utility.N);
             }
             pietreRimaste[indice - 1]--;
             pietreTamagolem[i] = EnumElementi.values()[indice - 1];
