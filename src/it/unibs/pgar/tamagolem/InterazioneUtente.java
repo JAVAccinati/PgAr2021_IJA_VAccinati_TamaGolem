@@ -168,8 +168,8 @@ public class InterazioneUtente {
         TamaGolem tamaGolem1 = giocatori[0].getTeam().get(giocatori[0].getTeam().size() - 1);
         TamaGolem tamaGolem2 = giocatori[1].getTeam().get(giocatori[1].getTeam().size() - 1);
 
-        System.out.println(String.format(LANCIO_PIETRA, tamaGolem1.getNome(), tamaGolem1.getPietre()[0].toString()));
-        System.out.println(String.format(LANCIO_PIETRA, tamaGolem2.getNome(), tamaGolem2.getPietre()[0].toString()));
+        System.out.println(String.format(LANCIO_PIETRA, tamaGolem1.getNome(), tamaGolem1.getPietre()[0].getNome()));
+        System.out.println(String.format(LANCIO_PIETRA, tamaGolem2.getNome(), tamaGolem2.getPietre()[0].getNome()));
         if (danno > 0) {
             System.out.println(String.format(DANNO_SUBITO, tamaGolem2.getNome(), Math.abs(danno)));
         } else if (danno < 0) {

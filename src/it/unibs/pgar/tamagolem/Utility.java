@@ -81,7 +81,7 @@ public class Utility {
     private static String[] setupElementi() {
         String[] elementi = new String[N];
         for (int i = 0; i < N; i++) {
-            elementi[i] = EnumElementi.values()[i].toString();
+            elementi[i] = EnumElementi.values()[i].getNome();
         }
         return elementi;
     }
@@ -99,5 +99,5 @@ public class Utility {
         }
         return pietreRimaste;
     }
- 
+
 }

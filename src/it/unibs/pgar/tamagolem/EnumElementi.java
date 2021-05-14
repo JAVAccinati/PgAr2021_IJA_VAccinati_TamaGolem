@@ -6,24 +6,26 @@ package it.unibs.pgar.tamagolem;
  * matrice dell'equilibrio.
  */
 public enum EnumElementi {
-    SIMP(0),
-    POGGERS(1),
-    DISCORD_MOD(2),
-    SUGAR_DADDY(3),
-    E_GIRL(4),
-    _69420(5),
-    STEP_BRO(6),
-    GOLD_DIGGER(7),
-    KAREN(8);
+    SIMP(0, "SIMP"),
+    POGGERS(1, "POGGERS"),
+    DISCORD_MOD(2, "DISCORD MOD"),
+    SUGAR_DADDY(3, "SUGAR DADDY"),
+    E_GIRL(4, "E-GIRL"),
+    _69420(5, "69420"),
+    STEP_BRO(6, "STEP BRO"),
+    GOLD_DIGGER(7, "GOLD DIGGER"),
+    KAREN(8, "KAREN");
 
     //ATTRIBUTI
 
     private int numeroListaElemento;
+    private String nome;
 
     //COSTRUTTORE
 
-    EnumElementi(int numeroListaElemento) {
+    EnumElementi(int numeroListaElemento, String nome) {
         this.numeroListaElemento = numeroListaElemento;
+        this.nome = nome;
     }
 
     //GETTER AND SETTER
@@ -34,6 +36,14 @@ public enum EnumElementi {
 
     public void setNumeroListaElemento(int numeroListaElemento) {
         this.numeroListaElemento = numeroListaElemento;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
 }
