@@ -11,7 +11,7 @@ public enum EnumElementi {
     DISCORD_MOD(2),
     SUGAR_DADDY(3),
     E_GIRL(4),
-    69420XD(5),
+    _69420(5),
     STEP_BRO(6),
     GOLD_DIGGER(7),
     KAREN(8);
